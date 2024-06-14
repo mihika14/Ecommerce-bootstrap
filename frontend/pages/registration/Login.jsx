@@ -21,7 +21,7 @@ const Login = () => {
       Cookies.set('username', username);
       Cookies.set('password', password);
       router.push('/indexnew');
-      alert('Logging you in')
+      // alert('Logging you in')
     } catch (error) {
       setError('Invalid username or password');
     }

@@ -46,6 +46,10 @@ const CartPage = () => {
     fetchCartData();
   }, []);
 
+  const calculateSubtotal = () => {
+    return cartData.items.reduce((total, item) => total + item.subTotal, 0);
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -55,6 +59,7 @@ const CartPage = () => {
   }
 
   const { length: cartLength, items: cartItems, grandTotal } = cartData;
+  const subtotal = calculateSubtotal();
 
   return (
     <section className="h-100 gradient-custom">
@@ -97,13 +102,13 @@ const CartPage = () => {
                           <strong>{item.name}</strong>
                         </p>
                         <p>Price: ₹{item.price}</p>
-                        <button
+                        {/* <button
                           type="button"
                           className="btn btn-primary btn-sm me-1 mb-2"
                           onClick={() => addToCart(item)}
                         >
                           Add to Cart
-                        </button>
+                        </button> */}
                         <button
                           type="button"
                           className="btn btn-danger btn-sm mb-2"
@@ -174,7 +179,7 @@ const CartPage = () => {
                 <ul className="list-group list-group-flush">
                   <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                     Products
-                    <span>₹{grandTotal}</span>
+                    <span>₹{subtotal}</span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between align-items-center px-0">
                     Shipping
@@ -188,7 +193,7 @@ const CartPage = () => {
                       </strong>
                     </div>
                     <span>
-                      <strong>₹{grandTotal}</strong>
+                      <strong>₹{subtotal}</strong>
                     </span>
                   </li>
                 </ul>

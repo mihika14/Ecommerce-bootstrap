@@ -7,6 +7,7 @@ import '../public/css/owl.carousel.css'
 import '../public/scss/style.scss'
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import '../public/css/payment.css'
 
 
 export default function App({

@@ -22,7 +22,7 @@ const PasswordReset = () => {
           confirmPassword: confirmPassword,
         }
       );
-      alert("Password Changed Successfully");
+      // alert("Password Changed Successfully");
       router.push("/Password_reset_complete");
     } catch (error) {
       if (error.response) {

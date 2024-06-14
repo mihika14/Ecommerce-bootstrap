@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Header from "@/components/Headernew";
@@ -8,43 +7,75 @@ import Image from "next/image";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
+  const [cartId, setCartId] = useState(null);
   const [cartItems, setCartItems] = useState([]);
-  const router = useRouter();
 
   useEffect(() => {
+    // Fetch products
     axios
       .get("http://localhost:8000/api/products/")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
+
+    // Fetch or create cart
+    const fetchOrCreateCart = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/api/carts/get_or_create_cart/",
+          {},
+          {
+            auth: {
+              username: Cookies.get("username"),
+              password: Cookies.get("password"),
+            },
+          }
+        );
+        setCartId(response.data.id); // Set the cartId from response
+      } catch (error) {
+        console.error("Error fetching or creating cart:", error);
+      }
+    };
+    fetchOrCreateCart();
   }, []);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/cart/")
-      .then((response) => setCartItems(response.data))
-      .catch((error) => console.error("Error fetching cart:", error));
-  }, []);
+    // Fetch cart items if cartId is available
+    if (cartId) {
+      axios
+        .get(`http://localhost:8000/api/cart/${cartId}/items/`, {
+          auth: {
+            username: Cookies.get("username"),
+            password: Cookies.get("password"),
+          },
+        })
+        .then((response) => setCartItems(response.data))
+        .catch((error) => console.error("Error fetching cart items:", error));
+    }
+  }, [cartId]);
 
   const addToCart = async (item) => {
     try {
-      const username = Cookies.get('username'); 
-      const password = Cookies.get('password'); 
-      const response = await axios.post("http://localhost:8000/api/carts/{cart_id}/items/", {
-        product_id: item.id,
-        quantity: 1,
-      }, {
-        auth: {
-          username: username,
-          password: password,
+      const response = await axios.post(
+        `http://localhost:8000/api/carts/get_or_create_cart/`,
+        {
+          product_id: item.id,
+          quantity: 1,
+        },
+        {
+          auth: {
+            username: Cookies.get("username"),
+            password: Cookies.get("password"),
+          },
         }
-      });
+      );
 
-      if (response.status === 201) {
-        setCartItems((prevCartItems) => [...prevCartItems, item]);
-        alert("Item has been successfully added to cart!");
+      if (response.status === 201 || response.status === 200) {
+        setCartItems((prevCartItems) => [...prevCartItems, response.data]);
+        // alert("Item has been successfully added to cart!");
       }
     } catch (error) {
       console.error("Error adding item to cart:", error);
+      // alert(`Error adding item to cart: ${error.response?.data?.detail || error.message}`);
     }
   };
 
@@ -106,7 +137,7 @@ const HomePage = () => {
                   {products.map((product) => (
                     <div key={product.id} className="single-product-wrapper">
                       <div className="product-img">
-                        <img src={product.image} alt={product.name} width="100" height='100'/>
+                        <img src={product.image} alt={product.name} width="100" height="100" />
                         <Image
                           className="hover-img"
                           src={product.hoverImage}

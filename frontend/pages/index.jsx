@@ -48,7 +48,7 @@ const HomePage = () => {
       })
       .catch(error => {
         console.error('Error adding item to cart:', error);
-        alert("Please log in to continue adding items to car")
+        // alert("Please log in to continue adding items to car")
       });
   };
 
