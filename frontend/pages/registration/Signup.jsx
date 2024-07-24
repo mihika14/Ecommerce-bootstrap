@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import Header from "@/components/header";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -19,6 +20,55 @@ const SignUpForm = () => {
       return;
     }
     setError("");
+=======
+
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+
+const SignUpForm = () => {
+  const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let token = Cookies.get("token");
+    if (token) {
+      router.push("/");
+    }
+  }, []);
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+
+    console.log(error);
+    if (!passwordRegex.test(password)) {
+      setError({
+        password: "Password must be 8+ chars with upper, lower, and special.",
+      });
+      return;
+    } else {
+      setError({
+        password: "",
+      });
+    }
+
+    if (password !== confirmPassword) {
+      setError({ confirmPassword: "Passwords don't match" });
+      return;
+    } else {
+      setError({
+        confirmPassword: "",
+      });
+    }
+>>>>>>> c1ada96 (adding images of website)
     try {
       const response = await axios.post("http://localhost:8000/api/register/", {
         username: username,
@@ -27,10 +77,18 @@ const SignUpForm = () => {
         firstName: firstName,
         lastName: lastName,
       });
+<<<<<<< HEAD
       Cookies.set("username", username);
       Cookies.set("password", password);
       router.push("/Login");
       alert("succesfully registered!");
+=======
+      if (response.status === 200) {
+        Cookies.set("token", response.data.token);
+        router.push("/login");
+        alert("succesfully registered!");
+      }
+>>>>>>> c1ada96 (adding images of website)
     } catch (error) {
       console.log(error);
       setError("Registration failed");
@@ -39,7 +97,10 @@ const SignUpForm = () => {
 
   return (
     <>
+<<<<<<< HEAD
       <Header />
+=======
+>>>>>>> c1ada96 (adding images of website)
       <section className="background-radial-gradient overflow-hidden">
         <style>
           {`
@@ -128,14 +189,22 @@ const SignUpForm = () => {
                     onSubmit={handleRegister}
                   >
                     <div className="form-outline mb-4">
+<<<<<<< HEAD
                       <label for="exampleInputEmail1">Username:</label>
                       <input
                         type="text"
                         class="form-control"
+=======
+                      <label htmlFor="exampleInputEmail1">Username:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+>>>>>>> c1ada96 (adding images of website)
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
                         placeholder="Enter Username"
                         value={username}
+<<<<<<< HEAD
                         onChange={(e) => setUsername(e.target.value)}
                       />
                       <br />
@@ -143,10 +212,21 @@ const SignUpForm = () => {
                       <input
                         type="text"
                         class="form-control"
+=======
+                        required
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <br />
+                      <label htmlFor="exampleInputEmail1">First Name:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+>>>>>>> c1ada96 (adding images of website)
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
                         placeholder="Enter First Name"
                         value={firstName}
+<<<<<<< HEAD
                         onChange={(e) => setFirstName(e.target.value)}
                       />
                       <br />
@@ -154,10 +234,21 @@ const SignUpForm = () => {
                       <input
                         type="text"
                         class="form-control"
+=======
+                        required
+                        onChange={(e) => setFirstName(e.target.value)}
+                      />
+                      <br />
+                      <label htmlFor="exampleInputEmail1">Last Name:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+>>>>>>> c1ada96 (adding images of website)
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
                         placeholder="Enter Last Name"
                         value={lastName}
+<<<<<<< HEAD
                         onChange={(e) => setLastName(e.target.value)}
                       />
                       <br />
@@ -165,10 +256,20 @@ const SignUpForm = () => {
                       <input
                         type="email"
                         class="form-control"
+=======
+                        required
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
+                      <br />
+                      <label htmlFor="exampleInputEmail1">Enter Email:</label>
+                      <input
+                        className="form-control"
+>>>>>>> c1ada96 (adding images of website)
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
                         placeholder="Enter Email"
                         value={email}
+<<<<<<< HEAD
                         onChange={(e) => setEmail(e.target.value)}
                       />
                       <br />
@@ -176,12 +277,57 @@ const SignUpForm = () => {
                       <input
                         type="text"
                         class="form-control"
+=======
+                        required
+                        type="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                      <br />
+                      <label htmlFor="exampleInputEmail1">Password:</label>
+                      <input
+                        type="password"
+                        className="form-control"
+>>>>>>> c1ada96 (adding images of website)
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
                         placeholder="Enter Password"
                         value={password}
+<<<<<<< HEAD
                         onChange={(e) => setPassword(e.target.value)}
                       />
+=======
+                        required
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                      <p
+                        style={{
+                          color: "red",
+                        }}
+                      >
+                        {error.password && error.password}
+                      </p>
+                      <br />
+                      <label htmlFor="exampleInputEmail1">
+                        Confirm Password:
+                      </label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="Enter Password again"
+                        value={confirmPassword}
+                        required
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                      <p
+                        style={{
+                          color: "red",
+                        }}
+                      >
+                        {error.confirmPassword && error.confirmPassword}
+                      </p>
+>>>>>>> c1ada96 (adding images of website)
                     </div>
 
                     <button
@@ -213,4 +359,8 @@ const SignUpForm = () => {
   );
 };
 
+<<<<<<< HEAD
 export default SignUpForm;
+=======
+export default SignUpForm;
+>>>>>>> c1ada96 (adding images of website)

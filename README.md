@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ecommerce Platform with Blog System
 ## Overview 
 This project is a full-stack web application built with Next.js, Django, SQL, and Bootstrap. It features secure user authentication, profile management, a blog system, and comprehensive e-commerce functionalities. The front-end is powered by Next.js and Bootstrap for a responsive and dynamic user interface, while the back-end is managed by Django, with SQL for data storage and management.
@@ -161,3 +162,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Contact
 Mihika - mihikasaxena13@gmail.com
 Project Link: https://github.com/mihika14/Ecommerce-bootstrap
+=======
+# Ecommerce
+>>>>>>> c1ada96 (adding images of website)

@@ -137,7 +137,11 @@ const HomePage = () => {
                   {products.map((product) => (
                     <div key={product.id} className="single-product-wrapper">
                       <div className="product-img">
+<<<<<<< HEAD
                         <img src={product.image} alt={product.name} width="100" height="100" />
+=======
+                        <img src={product.image} alt={product.name} width="100" height="100" style={{width:"500px" , height:"500px"}}/>
+>>>>>>> c1ada96 (adding images of website)
                         <Image
                           className="hover-img"
                           src={product.hoverImage}

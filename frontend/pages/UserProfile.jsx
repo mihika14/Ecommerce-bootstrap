@@ -12,8 +12,13 @@ const UserProfile = () => {
           "http://localhost:8000/api/user-profile/",
           {
             auth: {
+<<<<<<< HEAD
               username: "admin",
               password: "admin1",
+=======
+              username: username,
+              password: password,
+>>>>>>> c1ada96 (adding images of website)
             },
           }
         );
